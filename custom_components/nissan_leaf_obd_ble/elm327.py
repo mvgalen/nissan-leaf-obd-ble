@@ -170,7 +170,18 @@ class ELM327:
                 return self
             # by now, we've successfuly connected to the OBD socket
             self.__status = OBDStatus.OBD_CONNECTED
-
+            
+        #try to filter 0x55b ID 55B: 8 C8C0AA00BAC0218B
+        r = await self.__send(b"AT FT 55b")
+        if not self.__isok(r):
+            await self.__error("ATCAF0 did not return 'OK'")
+            return self
+            
+        r = await self.__send(b"AT MA")
+        if not self.__isok(r):
+            await self.__error("ATCAF0 did not return 'OK'")
+            return self
+        
         # try to communicate with the car, and load the correct protocol parser
         self.__status = OBDStatus.CAR_CONNECTED
         return self
