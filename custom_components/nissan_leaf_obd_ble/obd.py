@@ -207,7 +207,7 @@ class OBD:
 
         return cmd(messages)  # compute a response object
 
-    async def query(self, cmd, force=False):
+    async def send(self, cmd, force=False):
         """Primary API function. Send commands to the car, and protect against sending unsupported commands."""
 
         if self.status() == OBDStatus.NOT_CONNECTED:
