@@ -311,3 +311,12 @@ def lbc(messages):
         "hv_battery_current_2": hv_battery_current_2 / 1024,
         "hv_battery_voltage": int.from_bytes(d[20:22]) / 100,
     }
+
+def soc(messages):
+    """Decode SOC message."""
+    d = messages[0].data
+    if len(d) == 0:
+        return None
+    return {
+        "state_of_charge": int.from_bytes(d[0], byteorder="big", signed=False),
+    }

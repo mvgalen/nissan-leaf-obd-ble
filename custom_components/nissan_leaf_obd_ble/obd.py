@@ -207,6 +207,50 @@ class OBD:
 
         return cmd(messages)  # compute a response object
 
+    async def read(self, cmd):
+        """Primary API function. Responses from the car"""
+
+        if self.status() == OBDStatus.NOT_CONNECTED:
+            logger.warning("Query failed, no connection available")
+            return OBDResponse()
+
+        r = await self.interface.send_and_parse(b"AT MR " + cmd.header + b" ")
+        if not r:
+            logger.info("CMD ('AT MR %s') did not return data", cmd.header)
+            return
+        if "\n".join([m.raw() for m in r]) != "OK":
+            logger.info("CMD ('AT MR %s') did not return 'OK'", cmd.header)
+            return
+
+        messages = await self.interface.read_and_parse()
+
+        r = await self.interface.send_and_parse(b" ")
+        if not r:
+            logger.info("CMD('STOP') did not return data")
+            return
+        if "\n".join([m.raw() for m in r]) != "STOPPED":
+            logger.info("CMD (' ') did not return 'STOPPED'")
+            return
+
+        for f in messages[0].frames:
+            logger.debug("Received frame: %s", f.raw)
+
+        # if we don't already know how many frames this command returns,
+        # log it, so we can specify it next time
+        if cmd not in self.__frame_counts:
+            self.__frame_counts[cmd] = sum([len(m.frames) for m in messages])
+
+        if not messages:
+            logger.info("No valid OBD Messages returned")
+            return OBDResponse()
+
+        for m in messages:
+            if len(m.data) == 0 & ((m.raw == "NO DATA") | (m.raw == "CAN ERROR")):
+                logger.info("Vehicle not responding")
+                return OBDResponse()
+
+        return cmd(messages)  # compute a response object
+
     def __build_command_string(self, cmd):
         """Assemble the appropriate command string."""
         cmd_string = cmd.command

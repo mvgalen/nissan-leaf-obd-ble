@@ -7,6 +7,9 @@ from bleak.backends.device import BLEDevice
 
 from .commands import leaf_commands
 from .obd import OBD
+from .decoders import (
+    soc
+)
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -40,6 +43,13 @@ class NissanLeafObdBleApiClient:
                 break
             if response.value is not None:
                 data.update(response.value)  # send the command, and parse the response
+
+        soc_cmd = OBDCommand("soc",                   "Soc",    b"022101",      8, soc,                    header=b"55B",)
+        response = await api.read(soc_cmd)
+        if response.value is not None:
+            data.update(response.value)
+
         _LOGGER.debug("Returning data: %s", data)
+	
         await api.close()
         return data

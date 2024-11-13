@@ -171,17 +171,6 @@ class ELM327:
             # by now, we've successfuly connected to the OBD socket
             self.__status = OBDStatus.OBD_CONNECTED
             
-        #try to filter 0x55b ID 55B: 8 C8C0AA00BAC0218B
-        r = await self.__send(b"AT FT 55b")
-        if not self.__isok(r):
-            await self.__error("ATCAF0 did not return 'OK'")
-            return self
-            
-        r = await self.__send(b"AT MA")
-        if not self.__isok(r):
-            await self.__error("ATCAF0 did not return 'OK'")
-            return self
-        
         # try to communicate with the car, and load the correct protocol parser
         self.__status = OBDStatus.CAR_CONNECTED
         return self
@@ -303,6 +292,28 @@ class ELM327:
         lines = await self.__send(cmd)
         return self.__protocol(lines)
 
+    async def read_and_parse(self) -> list[Message]:
+        """Send OBDCommands.
+
+        Sends the given command string, and parses the
+        response lines with the protocol object.
+
+        An empty command string will re-trigger the previous command
+
+        Returns a list of Message objects
+        """
+
+        if self.__status == OBDStatus.NOT_CONNECTED:
+            logger.info("cannot read_and_parse() when unconnected")
+            return None
+
+        # Check if we are in low power
+        #if self.__low_power:
+        #    await self.normal_power()
+
+        lines = await self.__recv()
+        return self.__protocol(lines)
+
     async def __send(self, cmd, delay=None, end_marker=ELM_PROMPT):
         """Unprotected send() function.
 
@@ -312,6 +323,29 @@ class ELM327:
         default, the prompt) is seen
         """
         await self.__write(cmd)
+
+        delayed = 0.0
+        if delay is not None:
+            logger.debug("wait: %d seconds", delay)
+            await asyncio.sleep(delay)
+            delayed += delay
+
+        r = await self.__read(end_marker=end_marker)
+        while delayed < 1.0 and len(r) <= 0:
+            d = 0.1
+            logger.debug("no response; wait: %f seconds", d)
+            await asyncio.sleep(d)
+            delayed += d
+            r = await self.__read(end_marker=end_marker)
+        return r
+
+    async def __recv(self, delay=None, end_marker=ELM_PROMPT):
+        """Unprotected send() function.
+
+        returns result of __read() (a list of line strings)
+        after an optional delay, until the end marker (by
+        default, the prompt) is seen
+        """
 
         delayed = 0.0
         if delay is not None:
