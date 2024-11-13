@@ -222,12 +222,12 @@ class OBD:
         if "\n".join([m.raw() for m in r]) != "OK":
             logger.info("CMD ('AT MT %s') did not return 'OK', but: %s", cmd.header, "\n".join([m.raw() for m in r]) )
 #            return
-        r = await self.interface.send_and_parse(b"AT MR 5" + b" ")
-        if not r:
-            logger.info("CMD ('AT MR %s') did not return data", cmd.header)
-            return
-        if "\n".join([m.raw() for m in r]) != "OK":
-            logger.info("CMD ('AT MR %s') did not return 'OK', but: %s", cmd.header, "\n".join([m.raw() for m in r]) )
+#        r = await self.interface.send_and_parse(b"AT MR 5" + b" ")
+#        if not r:
+#            logger.info("CMD ('AT MR %s') did not return data", cmd.header)
+#            return
+#        if "\n".join([m.raw() for m in r]) != "OK":
+#            logger.info("CMD ('AT MR %s') did not return 'OK', but: %s", cmd.header, "\n".join([m.raw() for m in r]) )
 #            return
 
         messages = await self.interface.read_and_parse()
