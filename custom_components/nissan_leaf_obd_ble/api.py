@@ -40,7 +40,7 @@ class NissanLeafObdBleApiClient:
 
         data = {}
         for command in leaf_commands.values():
-	    if command.name == "lbc"
+            if command.name == "lbc"
                 lbc_cmd = OBDCommand("lbc",                   "Li-ion battery controller",    b"0221010000000000",      53, lbc, header=b"79B",)
                 await api.send(lbc_cmd)
             response = await api.query(command, force=True)
