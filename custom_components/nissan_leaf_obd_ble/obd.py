@@ -206,6 +206,37 @@ class OBD:
                 return OBDResponse()
 
         return cmd(messages)  # compute a response object
+    async def rawquery(self, cmd, force=False):
+        """Primary API function. Send commands to the car, and protect against sending unsupported commands."""
+
+        if self.status() == OBDStatus.NOT_CONNECTED:
+            logger.warning("Query failed, no connection available")
+            return OBDResponse()
+
+        # if the user forces, skip all checks
+        if not force and not self.test_cmd(cmd):
+            return OBDResponse()
+
+        logger.info("Sending command: %s", cmd)
+        messages = await self.interface.send_and_parse(cmd.command)
+        for f in messages[0].frames:
+            logger.debug("Received frame: %s", f.raw)
+
+        # if we don't already know how many frames this command returns,
+        # log it, so we can specify it next time
+        if cmd not in self.__frame_counts:
+            self.__frame_counts[cmd] = sum([len(m.frames) for m in messages])
+
+        if not messages:
+            logger.info("No valid OBD Messages returned")
+            return OBDResponse()
+
+        for m in messages:
+            if len(m.data) == 0 & ((m.raw == "NO DATA") | (m.raw == "CAN ERROR")):
+                logger.info("Vehicle not responding")
+                return OBDResponse()
+
+        return cmd(messages)  # compute a response object
 
     async def send(self, cmd, force=False):
         """Primary API function. Send commands to the car, and protect against sending unsupported commands."""
