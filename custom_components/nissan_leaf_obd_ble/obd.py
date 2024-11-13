@@ -217,7 +217,7 @@ class OBD:
         if not force and not self.test_cmd(cmd):
             return OBDResponse()
 
-        logger.info("Sending command: %s", cmd)
+        logger.info("Sending command: %s", str(cmd.command))
         messages = await self.interface.send_and_parse(str(cmd.command))
         for f in messages[0].frames:
             logger.debug("Received frame: %s", f.raw)
