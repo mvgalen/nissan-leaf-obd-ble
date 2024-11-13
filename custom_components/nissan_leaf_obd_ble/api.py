@@ -42,7 +42,7 @@ class NissanLeafObdBleApiClient:
         for command in leaf_commands.values():
             if command.name == "lbc":
                 lbc_cmd = OBDCommand("lbc",                   "Li-ion battery controller",    b"0221010000000000",      53, lbc, header=b"79B",)
-                await api.send(lbc_cmd)
+                await api.send(lbc_cmd, force=True)
             response = await api.query(command, force=True)
             # the first command is the Mystery command. If this doesn't have a response, then none of the other will
             if command.name == "unknown" and len(response.messages) == 0:
