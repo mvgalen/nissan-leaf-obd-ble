@@ -47,11 +47,9 @@ class NissanLeafObdBleApiClient:
         await api.query(w3_cmd, force=True)
         w4_cmd = OBDCommand("wake4",                   "WAKE4",    b"00",      0, lbc, header=b"679",)
         await api.query(w4_cmd, force=True)
+        await api.query(w1_cmd, force=True)
 
         for command in leaf_commands.values():
-#            if command.name == "lbc":
-#                lbc_cmd = OBDCommand("lbc",                   "Li-ion battery controller",    b"02210100000000000",      0, lbc, header=b"79B",)
-#                await api.send(lbc_cmd, force=True)
             response = await api.query(command, force=True)
             # the first command is the Mystery command. If this doesn't have a response, then none of the other will
             if command.name == "unknown" and len(response.messages) == 0:
