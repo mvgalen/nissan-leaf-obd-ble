@@ -219,8 +219,8 @@ class OBD:
             logger.info("CMD ('AT MR %s') did not return data", cmd.header)
             return
         if "\n".join([m.raw() for m in r]) != "OK":
-            logger.info("CMD ('AT MR %s') did not return 'OK'", cmd.header)
-            return
+            logger.info("CMD ('AT MR %s') did not return 'OK', but: %s", cmd.header, "\n".join([m.raw() for m in r]) )
+#            return
 
         messages = await self.interface.read_and_parse()
 
@@ -229,8 +229,8 @@ class OBD:
             logger.info("CMD('STOP') did not return data")
             return
         if "\n".join([m.raw() for m in r]) != "STOPPED":
-            logger.info("CMD (' ') did not return 'STOPPED'")
-            return
+            logger.info("CMD (' ') did not return 'STOPPED', but: %s", "\n".join([m.raw() for m in r]) )
+#            return
 
         for f in messages[0].frames:
             logger.debug("Received frame: %s", f.raw)

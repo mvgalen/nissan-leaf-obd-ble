@@ -99,7 +99,7 @@ class ELM327:
             await self.__port.open()
         except Exception:
             logger.warning(
-                "An error occurred: %s", ("auto" if protocol is None else protocol,)
+                "An error occurred: protocol %s", ("auto" if protocol is None else protocol,)
             )
             return self
 
