@@ -108,7 +108,7 @@ class OBD:
             logger.info("Set Header ('AT FC SH %s') did not return 'OK'", header)
             return
 
-        r = await self.interface.send_and_parse(b"ATFCSD 300000000000")
+        r = await self.interface.send_and_parse(b"ATFCSD 3000000000")
         if not r:
             logger.info("Set Header ('AT FC SD %s') did not return data", header)
             return
