@@ -312,7 +312,7 @@ class ELM327:
         if self.__low_power:
             await self.normal_power()
 
-	await self.__write(cmd)
+        await self.__write(cmd)
         return
 
     async def read_and_parse(self) -> list[Message]:
