@@ -218,7 +218,7 @@ class OBD:
             return OBDResponse()
 
         logger.info("Sending command: %s", str(cmd.command))
-        messages = await self.interface.send_and_parse(str(cmd.command))
+        messages = await self.interface.send_and_parse(cmd.command)
         for f in messages[0].frames:
             logger.debug("Received frame: %s", f.raw)
 
