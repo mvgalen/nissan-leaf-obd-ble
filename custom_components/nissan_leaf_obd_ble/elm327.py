@@ -99,7 +99,7 @@ class ELM327:
             await self.__port.open()
         except Exception:
             logger.warning(
-                "An error occurred: protocol %s", ("auto" if protocol is None else protocol,)
+                "An error occurred: %s", ("auto" if protocol is None else protocol,)
             )
             return self
 
@@ -170,7 +170,7 @@ class ELM327:
                 return self
             # by now, we've successfuly connected to the OBD socket
             self.__status = OBDStatus.OBD_CONNECTED
-            
+                    
         # try to communicate with the car, and load the correct protocol parser
         self.__status = OBDStatus.CAR_CONNECTED
         return self

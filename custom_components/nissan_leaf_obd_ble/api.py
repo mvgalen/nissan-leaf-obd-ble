@@ -46,10 +46,10 @@ class NissanLeafObdBleApiClient:
             if response.value is not None:
                 data.update(response.value)  # send the command, and parse the response
 
-        soc_cmd = OBDCommand("soc",                   "Soc",    b"022101",      8, soc,                    header=b"55B",)
-        response = await api.read(soc_cmd)
-        if response.value is not None:
-            data.update(response.value)
+#        soc_cmd = OBDCommand("soc",                   "Soc",    b"022101",      8, soc,                    header=b"55B",)
+#        response = await api.read(soc_cmd)
+#        if response.value is not None:
+#            data.update(response.value)
 
         _LOGGER.debug("Returning data: %s", data)
 	
