@@ -99,13 +99,13 @@ leaf_commands = {
 #    "eco_mode":              OBDCommand("eco_mode",              "ECO mode status",              b"03221318",    5,  eco_mode,               header=b"797",),
 #    "e_pedal_mode":          OBDCommand("e_pedal_mode",          "e-Pedal mode status",          b"0322131A",    5,  e_pedal_mode,           header=b"797",),
 
-    "odometer":              OBDCommand("odometer",              "Total odometer reading (km)",  b"03220e01",    6,  odometer,               header=b"743",),
+#    "odometer":              OBDCommand("odometer",              "Total odometer reading (km)",  b"03220e01",    6,  odometer,               header=b"743",),
 #    "tp_fr":                 OBDCommand("tp_fr",                 "Tyre pressure front right",    b"03220e25",    4,  tp_fr,                  header=b"743",),
 #    "tp_fl":                 OBDCommand("tp_fl",                 "Tyre pressure front left",     b"03220e26",    4,  tp_fl,                  header=b"743",),
 #    "tp_rr":                 OBDCommand("tp_rr",                 "Tyre pressure rear right",     b"03220e27",    4,  tp_rr,                  header=b"743",),
 #    "tp_rl":                 OBDCommand("tp_rl",                 "Tyre pressure rear left",      b"03220e28",    4,  tp_rl,                  header=b"743",),
 #    "range_remaining":       OBDCommand("range_remaining",       "Remaining range (km)",         b"03220e24",    13, range_remaining,        header=b"743",),
 
-#    "lbc":                   OBDCommand("lbc",                   "Li-ion battery controller",    b"0221010000000000\r3000000000000000",      53, lbc,                    header=b"79B",),
+    "lbc":                   OBDCommand("lbc",                   "Li-ion battery controller",    b"0221010000000000",      53, lbc,                    header=b"79B",),
 }
 # fmt: on
