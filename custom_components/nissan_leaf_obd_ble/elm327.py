@@ -293,6 +293,28 @@ class ELM327:
         lines = await self.__send(cmd)
         return self.__protocol(lines)
 
+    async def send(self, cmd) -> list[Message]:
+        """Send OBDCommands.
+
+        Sends the given command string, and parses the
+        response lines with the protocol object.
+
+        An empty command string will re-trigger the previous command
+
+        Returns a list of Message objects
+        """
+
+        if self.__status == OBDStatus.NOT_CONNECTED:
+            logger.info("cannot send_and_parse() when unconnected")
+            return None
+
+        # Check if we are in low power
+        if self.__low_power:
+            await self.normal_power()
+
+	await self.__write(cmd)
+        return
+
     async def read_and_parse(self) -> list[Message]:
         """Send OBDCommands.
 

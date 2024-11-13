@@ -207,6 +207,25 @@ class OBD:
 
         return cmd(messages)  # compute a response object
 
+    async def query(self, cmd, force=False):
+        """Primary API function. Send commands to the car, and protect against sending unsupported commands."""
+
+        if self.status() == OBDStatus.NOT_CONNECTED:
+            logger.warning("Query failed, no connection available")
+            return OBDResponse()
+
+        # if the user forces, skip all checks
+        if not force and not self.test_cmd(cmd):
+            return OBDResponse()
+
+        await self.__set_header(cmd.header)
+
+        logger.info("Sending command: %s", cmd)
+        cmd_string = self.__build_command_string(cmd)
+        messages = await self.interface.send(cmd_string)
+
+        return 
+
     async def read(self, cmd):
         """Primary API function. Responses from the car"""
 

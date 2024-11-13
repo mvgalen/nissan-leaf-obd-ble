@@ -106,7 +106,6 @@ leaf_commands = {
 #    "tp_rl":                 OBDCommand("tp_rl",                 "Tyre pressure rear left",      b"03220e28",    4,  tp_rl,                  header=b"743",),
 #    "range_remaining":       OBDCommand("range_remaining",       "Remaining range (km)",         b"03220e24",    13, range_remaining,        header=b"743",),
 
-    "lbc":                   OBDCommand("lbc",                   "Li-ion battery controller",    b"0221010000000000\r3000000000000000",      53, lbc,                    header=b"79B",),
-    "lbc2":                   OBDCommand("lbc2",                   "Li-ion battery controller",    b"0221010000000000\r3001000000000000",      53, lbc,                    header=b"79B",),
+#    "lbc":                   OBDCommand("lbc",                   "Li-ion battery controller",    b"0221010000000000\r3000000000000000",      53, lbc,                    header=b"79B",),
 }
 # fmt: on

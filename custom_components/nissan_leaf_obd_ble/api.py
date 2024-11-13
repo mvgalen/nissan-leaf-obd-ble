@@ -45,6 +45,14 @@ class NissanLeafObdBleApiClient:
                 break
             if response.value is not None:
                 data.update(response.value)  # send the command, and parse the response
+        lbc_cmd = OBDCommand("lbc",                   "Li-ion battery controller",    b"0221010000000000",      53, lbc,)
+        lbc2_cmd = OBDCommand("lbc",                   "Li-ion battery controller",    b"3000000000000000",      53, lbc,)
+        await api.send(lbc_cmd)
+        response = await api.query(lbc2_cmd, force=True)
+        # the first command is the Mystery command. If this doesn't have a response, then none of the other will
+        if response.value is not None:
+            data.update(response.value)  # send the command, and parse the response
+
 
 #        soc_cmd = OBDCommand("soc",                   "Soc",    b"022101",      8, soc,                    header=b"55B",)
 #        response = await api.read(soc_cmd)
