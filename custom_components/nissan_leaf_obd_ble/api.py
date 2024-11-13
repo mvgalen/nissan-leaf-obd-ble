@@ -50,6 +50,7 @@ class NissanLeafObdBleApiClient:
         await api.query(w1_cmd, force=True)
 
         for command in leaf_commands.values():
+            await api.query(w1_cmd, force=True)
             response = await api.query(command, force=True)
             # the first command is the Mystery command. If this doesn't have a response, then none of the other will
             if command.name == "unknown" and len(response.messages) == 0:
