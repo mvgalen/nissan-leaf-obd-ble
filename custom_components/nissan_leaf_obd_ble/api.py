@@ -10,6 +10,8 @@ from .obd import OBD
 from .decoders import (
     soc
 )
+from .OBDCommand import OBDCommand
+
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
