@@ -49,12 +49,12 @@ class NissanLeafObdBleApiClient:
         await api.query(w4_cmd, force=True)
         await api.query(w1_cmd, force=True)
 
-        cra = OBDCommand("cra",                   "CRA",    b"CRA 5b3 1\r",      0, lbc, header=b"5b3",)
-        response = await api.rawquery(cra, force=True)
+#        cra = OBDCommand("cra",                   "CRA",    b"CRA 5b3 1\r",      0, lbc, header=b"5b3",)
+#        response = await api.rawquery(cra, force=True)
         cra2 = OBDCommand("cra2",                   "CRA2",    b"CRA 583\r",      0, lbc, header=b"583",)
-        response = await api.rawquery(cr2, force=True)
+        await api.rawquery(cra2, force=True)
         cra3 = OBDCommand("cra3",                   "CRA3",    b"CRA\r",      0, lbc, header=b"583",)
-        response = await api.rawquery(cr3, force=True)
+        await api.rawquery(cra3, force=True)
 
         for command in leaf_commands.values():
             await api.query(w1_cmd, force=True)
