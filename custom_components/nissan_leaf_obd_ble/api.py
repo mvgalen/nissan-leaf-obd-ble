@@ -8,7 +8,8 @@ from bleak.backends.device import BLEDevice
 from .commands import leaf_commands
 from .obd import OBD
 from .decoders import (
-    soc
+    soc,
+    lbc
 )
 from .OBDCommand import OBDCommand
 
