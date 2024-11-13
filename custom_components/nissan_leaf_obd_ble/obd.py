@@ -215,12 +215,12 @@ class OBD:
             return OBDResponse()
 
 #        r = await self.interface.send_and_parse(b"AT MR " + cmd.header + b" ")
-        r = await self.interface.send_and_parse(b"AT MT 5b" + b" ")
-        if not r:
-            logger.info("CMD ('AT MT %s') did not return data", cmd.header)
-            return
-        if "\n".join([m.raw() for m in r]) != "OK":
-            logger.info("CMD ('AT MT %s') did not return 'OK', but: %s", cmd.header, "\n".join([m.raw() for m in r]) )
+#        r = await self.interface.send_and_parse(b"AT MT 5b" + b" ")
+#        if not r:
+#            logger.info("CMD ('AT MT %s') did not return data", cmd.header)
+#            return
+#        if "\n".join([m.raw() for m in r]) != "OK":
+#            logger.info("CMD ('AT MT %s') did not return 'OK', but: %s", cmd.header, "\n".join([m.raw() for m in r]) )
 #            return
 #        r = await self.interface.send_and_parse(b"AT MR 5" + b" ")
 #        if not r:
@@ -230,19 +230,19 @@ class OBD:
 #            logger.info("CMD ('AT MR %s') did not return 'OK', but: %s", cmd.header, "\n".join([m.raw() for m in r]) )
 #            return
 
-        messages = await self.interface.read_and_parse()
+#        messages = await self.interface.read_and_parse()
 
-        r = await self.interface.send_and_parse(b" ")
-        if not r:
-            logger.info("CMD('STOP') did not return data")
-            return
-        if "\n".join([m.raw() for m in r]) != "STOPPED":
-            logger.info("CMD (' ') did not return 'STOPPED', but: %s", "\n".join([m.raw() for m in r]) )
+#        r = await self.interface.send_and_parse(b" ")
+#        if not r:
+#            logger.info("CMD('STOP') did not return data")
+#            return
+#        if "\n".join([m.raw() for m in r]) != "STOPPED":
+#            logger.info("CMD (' ') did not return 'STOPPED', but: %s", "\n".join([m.raw() for m in r]) )
 #            return
 
-        logger.info("parsing %d frames", len(messages[0].frames))
-        for f in messages[0].frames:
-            logger.debug("Received frame: %s", f.raw)
+#        logger.info("parsing %d frames", len(messages[0].frames))
+#        for f in messages[0].frames:
+#            logger.debug("Received frame: %s", f.raw)
 
         # if we don't already know how many frames this command returns,
         # log it, so we can specify it next time
