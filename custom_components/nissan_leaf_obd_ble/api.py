@@ -43,6 +43,8 @@ class NissanLeafObdBleApiClient:
         await api.query(w1_cmd, force=True)
         w2_cmd = OBDCommand("wake2",                   "WAKE2",    b"00",      0, lbc, header=b"603",)
         await api.query(w2_cmd, force=True)
+        w3_cmd = OBDCommand("wake3",                   "WAKE3",    b"00",      0, lbc, header=b"5c0",)
+        await api.query(w3_cmd, force=True)
 
         for command in leaf_commands.values():
 #            if command.name == "lbc":
