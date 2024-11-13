@@ -40,19 +40,22 @@ class NissanLeafObdBleApiClient:
 
         data = {}
         for command in leaf_commands.values():
+	    if command.name == "lbc"
+                lbc_cmd = OBDCommand("lbc",                   "Li-ion battery controller",    b"0221010000000000",      53, lbc, header=b"79B",)
+                await api.send(lbc_cmd)
             response = await api.query(command, force=True)
             # the first command is the Mystery command. If this doesn't have a response, then none of the other will
             if command.name == "unknown" and len(response.messages) == 0:
                 break
             if response.value is not None:
                 data.update(response.value)  # send the command, and parse the response
-        lbc_cmd = OBDCommand("lbc",                   "Li-ion battery controller",    b"0221010000000000",      53, lbc,header=b"79B",)
-        lbc2_cmd = OBDCommand("lbc",                   "Li-ion battery controller",    b"3000000000000000",      53, lbc,header=b"79B",)
-        await api.send(lbc_cmd)
-        response = await api.query(lbc2_cmd, force=True)
-        # the first command is the Mystery command. If this doesn't have a response, then none of the other will
-        if response.value is not None:
-            data.update(response.value)  # send the command, and parse the response
+#        lbc_cmd = OBDCommand("lbc",                   "Li-ion battery controller",    b"0221010000000000",      53, lbc, header=b"79B",)
+#        lbc2_cmd = OBDCommand("lbc",                   "Li-ion battery controller",    b"3000000000000000",      53, lbc, header=b"79B",)
+#        await api.send(lbc_cmd)
+#        response = await api.query(lbc2_cmd, force=True)
+#        # the first command is the Mystery command. If this doesn't have a response, then none of the other will
+#        if response.value is not None:
+#            data.update(response.value)  # send the command, and parse the response
 
 
 #        soc_cmd = OBDCommand("soc",                   "Soc",    b"022101",      8, soc,                    header=b"55B",)
