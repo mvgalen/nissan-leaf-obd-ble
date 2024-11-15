@@ -136,34 +136,34 @@ class ELM327:
             return self
 
         # ------------------------ ATL0 (linefeeds OFF) -----------------------
-        r = await self.__send(b"ATL0\rATS0\rATCAF0")
+        r = await self.__send(b"ATL0")
         if not self.__isok(r):
             await self.__error("ATL0 did not return 'OK'")
             return self
 
         # ------------------------ ATS0 (printing spaces OFF)------------------
-#        r = await self.__send(b"ATS0")
-#        if not self.__isok(r):
-#            await self.__error("ATS0 did not return 'OK'")
-#            return self
+        r = await self.__send(b"ATS0")
+        if not self.__isok(r):
+            await self.__error("ATS0 did not return 'OK'")
+            return self
 
         # ----------------- ATCAF0 (CAN automatic formatting OFF)--------------
-#        r = await self.__send(b"ATCAF0")
-#        if not self.__isok(r):
-#            await self.__error("ATCAF0 did not return 'OK'")
- #           return self
+        r = await self.__send(b"ATCAF0")
+        if not self.__isok(r):
+            await self.__error("ATCAF0 did not return 'OK'")
+            return self
 
         # ------------------------ ATAT2 (Timeout ~50ms)------------------
-        r = await self.__send(b"ATAT2\rATST08")
+        r = await self.__send(b"ATAT2")
         if not self.__isok(r):
             await self.__error("ATAT2 did not return 'OK'")
             return self
 
-#        # ------------------------ ATST 04 (Timeout ~50ms)------------------
-#        r = await self.__send(b"ATST 08")
-#        if not self.__isok(r):
-#            await self.__error("ATST 04 did not return 'OK'")
-#            return self
+        # ------------------------ ATST 04 (Timeout ~50ms)------------------
+        r = await self.__send(b"ATST 08")
+        if not self.__isok(r):
+            await self.__error("ATST 04 did not return 'OK'")
+            return self
 
         # by now, we've successfuly communicated with the ELM, but not the car
         self.__status = OBDStatus.ELM_CONNECTED
