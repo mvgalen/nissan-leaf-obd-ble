@@ -317,7 +317,10 @@ class OBD:
         # if we know the number of frames that this command returns,
         # only wait for exactly that number. This avoids some harsh
         # timeouts from the ELM, thus speeding up queries.
-        if self.fast and cmd.fast and (cmd in self.__frame_counts):
+        if self.fast and cmd.fast and cmd.bytes >= 0:
+            cmd_string += str(cmd.bytes).encode()
+	elif self.fast and cmd.fast and (cmd in self.__frame_counts):
             cmd_string += str(self.__frame_counts[cmd]).encode()
+
 
         return cmd_string

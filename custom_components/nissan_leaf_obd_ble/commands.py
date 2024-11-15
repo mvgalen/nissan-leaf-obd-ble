@@ -76,7 +76,7 @@ logger = logging.getLogger(__name__)
 # fmt: off
 leaf_commands = {
     #          name                     description                     cmd             bytes decoder               header
-    "unknown":               OBDCommand("unknown",               "Mystery command",              b"0210C0",      0,  unknown,                header=b"797",),
+    "unknown":               OBDCommand("unknown",               "Mystery command",              b"0210C0",      0,  unknown,                header=b"797",True),
     "lbc":                   OBDCommand("lbc",                   "Li-ion battery controller",    b"022101",      41, lbc,                    header=b"79B",),
     "power_switch":          OBDCommand("power_switch",          "Power switch status",          b"03221304",    5,  power_switch,           header=b"797",),
 #    "gear_position":         OBDCommand("gear_position",         "Gear position",                b"03221156",    4,  gear_position,          header=b"797",),
