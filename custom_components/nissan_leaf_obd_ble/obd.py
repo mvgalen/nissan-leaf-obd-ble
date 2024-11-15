@@ -185,8 +185,8 @@ class OBD:
 
         await self.__set_header(cmd.header)
 
-        logger.info("Sending command: %s", cmd)
         cmd_string = self.__build_command_string(cmd)
+        logger.info("Sending command: %s bytes: [%s]", cmd, str(cmd_string))
         messages = await self.interface.send_and_parse(cmd_string)
         for f in messages[0].frames:
             logger.debug("Received frame: %s", f.raw)
@@ -321,7 +321,6 @@ class OBD:
             cmd_string += " " + str(cmd.bytes).encode()
         elif self.fast and cmd.fast and (cmd in self.__frame_counts):
             cmd_string += " " + str(self.__frame_counts[cmd]).encode()
-        logger.info("Cmd string: %s", cmd_string)
 
 
         return cmd_string
