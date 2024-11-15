@@ -367,7 +367,7 @@ class ELM327:
 
         r = await self.__read(end_marker=end_marker)
         while delayed < 1.0 and len(r) <= 0:
-            d = 0.1
+            d = 0.01
             logger.debug("no response; wait: %f seconds", d)
             await asyncio.sleep(d)
             delayed += d
@@ -390,7 +390,7 @@ class ELM327:
 
         r = await self.__read(end_marker=end_marker)
         while delayed < 1.0 and len(r) <= 0:
-            d = 0.1
+            d = 0.01
             logger.debug("no response; wait: %f seconds", d)
             await asyncio.sleep(d)
             delayed += d
