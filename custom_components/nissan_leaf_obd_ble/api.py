@@ -39,13 +39,13 @@ class NissanLeafObdBleApiClient:
             return None
 
         data = {}
-        w1_cmd = OBDCommand("wake1",                   "WAKE1",    b"0100",      0, lbc, header=b"682",fast=False)
+        w1_cmd = OBDCommand("wake1",                   "WAKE1",    b"00",      0, lbc, header=b"682",fast=False)
         await api.query(w1_cmd, force=True)
-        w2_cmd = OBDCommand("wake2",                   "WAKE2",    b"0100",      0, lbc, header=b"603",fast=False)
+        w2_cmd = OBDCommand("wake2",                   "WAKE2",    b"00",      0, lbc, header=b"603",fast=False)
         await api.query(w2_cmd, force=True)
-        w3_cmd = OBDCommand("wake3",                   "WAKE3",    b"0100",      0, lbc, header=b"5c0",fast=False)
+        w3_cmd = OBDCommand("wake3",                   "WAKE3",    b"00",      0, lbc, header=b"5c0",fast=False)
         await api.query(w3_cmd, force=True)
-        w4_cmd = OBDCommand("wake4",                   "WAKE4",    b"0100",      0, lbc, header=b"679",fast=False)
+        w4_cmd = OBDCommand("wake4",                   "WAKE4",    b"00",      0, lbc, header=b"679",fast=False)
         await api.query(w4_cmd, force=True)
 #        await api.query(w1_cmd, force=True)
 

@@ -153,6 +153,18 @@ class ELM327:
             await self.__error("ATCAF0 did not return 'OK'")
             return self
 
+        # ------------------------ ATAT2 (Timeout ~50ms)------------------
+        r = await self.__send(b"ATAT2")
+        if not self.__isok(r):
+            await self.__error("ATAT2 did not return 'OK'")
+            return self
+
+        # ------------------------ ATST 04 (Timeout ~50ms)------------------
+        r = await self.__send(b"ATST 08")
+        if not self.__isok(r):
+            await self.__error("ATST 04 did not return 'OK'")
+            return self
+
         # by now, we've successfuly communicated with the ELM, but not the car
         self.__status = OBDStatus.ELM_CONNECTED
 
