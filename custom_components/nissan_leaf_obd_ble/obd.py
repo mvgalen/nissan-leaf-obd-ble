@@ -89,7 +89,7 @@ class OBD:
             # the ELM327 class will report its own errors
             await self.close()
             return
-        r = await self.interface.send_and_parse(b"ATFCSD300000")
+        r = await self.interface.send_and_parse(b"AT FC SD 300000")
         if not r:
             logger.info("Set Header ('AT FC SD 300000') did not return data")
             return
@@ -97,7 +97,7 @@ class OBD:
             logger.info("Set Header ('AT FC SD 300000') did not return 'OK'")
             return
 
-        r = await self.interface.send_and_parse(b"ATFCSM1")
+        r = await self.interface.send_and_parse(b"AT FC SM 1")
         if not r:
             logger.info("Set Header ('AT FC SM 1') did not return data")
             return
