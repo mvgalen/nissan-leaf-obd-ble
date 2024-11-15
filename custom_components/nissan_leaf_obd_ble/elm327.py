@@ -110,12 +110,12 @@ class ELM327:
             await asyncio.sleep(1)
 
         # ---------------------------- ATZ (reset) ----------------------------
-#        try:
-#            await self.__send(b"ATZ", delay=1)  # wait 1 second for ELM to initialize
-#            # return data can be junk, so don't bother checking
-#        except Exception as e:
-#            await self.__error(e)
-#            return self
+        try:
+            await self.__send(b"ATZ", delay=1)  # wait 1 second for ELM to initialize
+            # return data can be junk, so don't bother checking
+        except Exception as e:
+            await self.__error(e)
+            return self
 
         # -------------------------- ATE0 (echo OFF) --------------------------
         r = await self.__send(b"ATE0")
