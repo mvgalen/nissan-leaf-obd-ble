@@ -136,22 +136,22 @@ class ELM327:
             return self
 
         # ------------------------ ATL0 (linefeeds OFF) -----------------------
-        r = await self.__send(b"ATL0")
+        r = await self.__send(b"ATL0\rATS0\rATCAF0")
         if not self.__isok(r):
             await self.__error("ATL0 did not return 'OK'")
             return self
 
         # ------------------------ ATS0 (printing spaces OFF)------------------
-        r = await self.__send(b"ATS0")
-        if not self.__isok(r):
-            await self.__error("ATS0 did not return 'OK'")
-            return self
+#        r = await self.__send(b"ATS0")
+#        if not self.__isok(r):
+#            await self.__error("ATS0 did not return 'OK'")
+#            return self
 
         # ----------------- ATCAF0 (CAN automatic formatting OFF)--------------
-        r = await self.__send(b"ATCAF0")
-        if not self.__isok(r):
-            await self.__error("ATCAF0 did not return 'OK'")
-            return self
+#        r = await self.__send(b"ATCAF0")
+#        if not self.__isok(r):
+#            await self.__error("ATCAF0 did not return 'OK'")
+ #           return self
 
         # ------------------------ ATAT2 (Timeout ~50ms)------------------
         r = await self.__send(b"ATAT2")
@@ -170,7 +170,7 @@ class ELM327:
 
         # -------------------------- AT RV (read volt) ------------------------
         if check_voltage:
-            r = await self.__send(b"AT RV")
+            r = await self.__send(b"ATRV")
             if not r or len(r) != 1 or r[0] == "":
                 await self.__error("No answer from 'AT RV'")
                 return self
