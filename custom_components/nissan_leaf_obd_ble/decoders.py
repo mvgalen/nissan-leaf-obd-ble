@@ -306,7 +306,7 @@ def lbc(messages):
     state_of_charge = 0;
     if len(d) > 48 :
         state_of_charge = int.from_bytes(d[33:36]) / 10000;
-    else
+    else:
         state_of_charge = int.from_bytes(d[37:40]) / 10000;
     return {
         "state_of_charge": state_of_charge,
