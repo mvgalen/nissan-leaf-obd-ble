@@ -304,10 +304,10 @@ def lbc(messages):
     if hv_battery_current_2 & 0x8000000 == 0x8000000:
         hv_battery_current_2 = hv_battery_current_2 | -0x100000000
     state_of_charge = 0;
-    if len(d) > 48 :
-        state_of_charge = int.from_bytes(d[33:36]) / 10000;
+    if len(d) > 48:
+        state_of_charge = int.from_bytes(d[33:36]) / 10000
     else:
-        state_of_charge = int.from_bytes(d[37:40]) / 10000;
+        state_of_charge = int.from_bytes(d[37:40]) / 10000
     return {
         "state_of_charge": state_of_charge,
         "hv_battery_health": int.from_bytes(d[30:32]) / 102.4,
