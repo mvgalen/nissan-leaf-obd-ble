@@ -295,6 +295,7 @@ def range_remaining(messages):
 def lbc(messages):
     """Decode LBC message."""
     d = messages[0].data
+    logger.info("Message sent to decoder: %s", repr(d));
     if len(d) == 0:
         return None
     hv_battery_current_1 = int.from_bytes(d[2:6], byteorder="big", signed=False)
