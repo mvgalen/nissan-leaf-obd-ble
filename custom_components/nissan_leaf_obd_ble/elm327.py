@@ -110,12 +110,12 @@ class ELM327:
             await asyncio.sleep(1)
 
         # ---------------------------- ATZ (reset) ----------------------------
-        try:
-            await self.__send(b"ATZ", delay=1)  # wait 1 second for ELM to initialize
-            # return data can be junk, so don't bother checking
-        except Exception as e:
-            await self.__error(e)
-            return self
+#        try:
+#            await self.__send(b"ATZ", delay=1)  # wait 1 second for ELM to initialize
+#            # return data can be junk, so don't bother checking
+#        except Exception as e:
+#            await self.__error(e)
+#            return self
 
         # -------------------------- ATE0 (echo OFF) --------------------------
         r = await self.__send(b"ATE0")
@@ -124,16 +124,16 @@ class ELM327:
             return self
 
         # ------------------------ ATSP6 (set protocol 6) ---------------------
-        r = await self.__send(b"ATSP6\rATH1")
+        r = await self.__send(b"ATSP6")
         if not self.__isok(r):
             await self.__error("ATSP6 did not return 'OK'")
             return self
 
-#        # ------------------------- ATH1 (headers ON) -------------------------
-#        r = await self.__send(b"ATH1")
-#        if not self.__isok(r):
-#            await self.__error("ATH1 did not return 'OK', or echoing is still ON")
-#            return self
+        # ------------------------- ATH1 (headers ON) -------------------------
+        r = await self.__send(b"ATH1")
+        if not self.__isok(r):
+            await self.__error("ATH1 did not return 'OK', or echoing is still ON")
+            return self
 
         # ------------------------ ATL0 (linefeeds OFF) -----------------------
         r = await self.__send(b"ATL0\rATS0\rATCAF0")
