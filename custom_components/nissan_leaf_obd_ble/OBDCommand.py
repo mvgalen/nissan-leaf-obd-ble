@@ -123,6 +123,10 @@ class OBDCommand:
                     self.bytes,
                     repr(message.data),
                 )
+#        logger.info(
+#            "Message sent to decoder: %s",
+#                repr(message.data)
+#            )
 
     def __str__(self):
         """Return string representation of command."""
