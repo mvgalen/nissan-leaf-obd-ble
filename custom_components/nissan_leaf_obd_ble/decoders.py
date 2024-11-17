@@ -310,11 +310,11 @@ def lbc(messages):
     if len(d) > 41:
         state_of_charge = int.from_bytes(d[33:36]) / 10000
         state_of_health = int.from_bytes(d[30:32]) / 102.4
-        battery_Ah = int.from_bytes(d[37:40]) / 10000,
+        battery_Ah = int.from_bytes(d[37:40]) / 10000
     else:
         state_of_charge = int.from_bytes(d[31:34]) / 10000
         state_of_health = int.from_bytes(d[28:30]) / 102.4
-        battery_Ah = int.from_bytes(d[34:37]) / 10000,
+        battery_Ah = int.from_bytes(d[34:37]) / 10000
 
     return {
         "state_of_charge": state_of_charge,
